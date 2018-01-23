@@ -1,0 +1,43 @@
+#browse-podcasts {
+    background-image: url('../../img/home/podcast_banner.jpg');
+}
+
+#browse-podcasts-title {
+    background-color: #60DE55;
+}
+
+.home-background-display {
+    background-repeat:  none;
+    background-size:    cover;
+}
+
+.double-border-right {
+    color:          #fff;
+    border-bottom:  0px solid transparent;
+    border-left:    0px solid transparent;
+    border-right:   30px solid white;
+    border-style:   double;
+    border-top:     30px solid transparent;
+}
+
+.home-title {
+    font-weight:    bold;
+    padding-left:   2%;
+    padding-top:    20%;
+}
+
+.home-title:hover {
+    background-color: red;
+}
+
+#latest-episodes-title {
+    background-color: #C47;
+}
+
+#latest-podcasts-title {
+    background-color: #11242D;
+}
+
+#podcasts div {
+    height: 300px;  
+}
