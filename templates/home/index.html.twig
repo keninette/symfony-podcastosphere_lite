@@ -1,0 +1,41 @@
+{% extends "base.html.twig" %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/home/index.css') }}">
+{% endblock %}
+{% block body %}
+    <section id="podcasts">
+        <a href="{{ path('star_podcast', {'id' : starPodcast.id}) }}">
+            <div class="row">
+                <div id="browse-podcasts-title" class="col-xs-12 col-sm-4 double-border-right home-title"><h1>LE PODCAST<br /> DE LA SEMAINE</h1></div>
+                <div id="browse-podcasts" class="col-xs-12 col-sm-8 home-background-display">
+                    <div class="row" id="podcast-star">
+                        <img src="{{ asset('img/podcasts/' ~starPodcast.banner) }}" alt="{{ starPodcast.name }}" />
+                        <h2 class="row podcast-star-child"></h2>
+                        <div class="row podcast-star-child"></div>
+                    </div>
+                </div>
+            </div>
+        </a>
+        <div class="row margin-top-medium">  
+            <div id="latest-podcasts-title" class="col-xs-12 col-sm-4 double-border-right home-title"><h1>DERNIERS<br />PODCASTS AJOUT&Eacute;S</h1></div>
+            <div id="latest-podcasts" class="col-xs-12 col-sm-8 home-background-display">
+                <div class="row">
+                    {% for podcast in podcasts %}
+                        <a class="col-xs-6 col-sm-3 " href="{{ path('star_podcast', {'id' : podcast.id}) }}">
+                            <div class="podcast-img">
+                                <h2>{{ podcast.name }}</h2>
+                                <div><img src="{{ asset('img/podcasts/'~ podcast.img) }}" alt="{{ podcast.name }}"/></div>
+                            </div>
+                        </a>        
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="row margin-top-medium">
+            <div id="latest-episodes-title" class="col-xs-12 col-sm-4 double-border-right home-title"><h1>DERNIERS<br />&Eacute;PISODES AJOUT&Eacute;S</h1></div>
+            <div id="latest-episodes" class="col-xs-12 col-sm-8 home-background-display"></div>
+        </div>
+    </section>
+{% endblock %}

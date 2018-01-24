@@ -1,5 +1,5 @@
 #browse-podcasts {
-    background-image: url('../../img/home/podcast_banner.jpg');
+
 }
 
 #browse-podcasts-title {
@@ -38,6 +38,21 @@
     background-color: #11242D;
 }
 
+.podcast-img {
+    background-color: #11242D;
+    border-right: 1px solid #fff;
+    color: #fff;
+    text-align: center;
+}
+
+.podcast-img img{
+    max-width: 200px; 
+}
+
 #podcasts div {
     height: 300px;  
+}
+
+#podcast-star img {
+    max-height: 300px;
 }

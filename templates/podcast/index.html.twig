@@ -1,0 +1,21 @@
+{% extends "base.html.twig" %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/podcast/index.css') }}">
+{% endblock %}
+
+{% block body %}
+    <section id="podcast-star" class="row">
+        <div id="header" class="col-xs">
+            <div class="col-xs"><img src="{{ asset('img/podcasts/' ~podcast.banner) }}" alt="{{ podcast.name }}" /></div>
+            <div class="col-xs"><h1>{{ podcast.name }} : {{ podcast.descriptionShort }}</h1></div>
+            <div class="col-xs"><p><a href="{{ podcast.url }}" target="_blank">Accéder au site web</a></p></div>
+            
+        </div>
+        <div id="content" class="row">
+            <p>{{ podcast.descriptionLong }}</p>
+        </div>
+        
+    </section>    
+{% endblock %}

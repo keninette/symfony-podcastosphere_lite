@@ -49,6 +49,11 @@ class Podcast
     private $img;
     
     /**
+     * @ORM\Column(type="string", length=25)
+     */
+    private $banner;
+    
+    /**
      * @ORM\Column(type="datetime", name="creation_date")
      */
     private $creationDate;
@@ -127,5 +132,11 @@ class Podcast
         $this->creationDate = $creationDate;
     }
 
+    function getBanner() {
+        return $this->banner;
+    }
 
+    function setBanner($banner) {
+        $this->banner = $banner;
+    }
 }
