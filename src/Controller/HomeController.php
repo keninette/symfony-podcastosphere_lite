@@ -3,6 +3,7 @@
 //src/Controller/HomeController.php
 
 namespace App\Controller;
+use App\Entity\Podcast;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -10,10 +11,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class HomeController extends Controller {
     
    /**
-    * @Route("/home/welcome")
+    * @Route("/")
     * @return Response
     */ 
-   public function welcome(){
-       return $this->render('home/welcome.twig.html');
+   public function indexAction(){
+       
+        $podcastRepository   = $this->getDoctrine()->getRepository(Podcast::class);
+        $latestPodcasts      = $podcastRepository->findLatest(4);
+        
+        return $this->render('home/index.twig.html', ['podcasts' => $latestPodcasts]);
    }
 }

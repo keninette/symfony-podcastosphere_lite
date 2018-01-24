@@ -13,16 +13,11 @@ class PodcastRepository extends ServiceEntityRepository
         parent::__construct($registry, Podcast::class);
     }
 
-    /*
-    public function findBySomething($value)
-    {
+    public function findLatest($limit) {
         return $this->createQueryBuilder('p')
-            ->where('p.something = :value')->setParameter('value', $value)
-            ->orderBy('p.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+                    ->orderBy('p.creationDate', 'desc')
+                    ->setMaxResults($limit)
+                    ->getQuery()
+                    ->getResult();
     }
-    */
 }

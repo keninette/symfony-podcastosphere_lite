@@ -10,15 +10,6 @@
         {% endblock %}
     </head>
     <body class="container-fluid">
-        <nav class="navbar navbar-default">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="#">
-                        <img alt="Brand" src="{{ asset('img/icon.png') }}">
-                    </a>
-                </div>
-            </div>
-          </nav>
         {% block body %}{% endblock %}
         {% block javascripts %}
             <script src="{{ asset('bower_components/jquery/dist/jquery.js') }}"></script>

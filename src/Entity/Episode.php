@@ -37,6 +37,17 @@ class Episode
     private $releaseDate;
     
     /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $url;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Podcast", inversedBy="episodes")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $podcast;
+    
+    /**
      * Episode constructor
      */
     public function __construct() {
@@ -73,6 +84,26 @@ class Episode
 
     function setReleaseDate($releaseDate) {
         $this->releaseDate = $releaseDate;
+    }
+
+    function getUrl() {
+        return $this->url;
+    }
+
+    function getPodcast() :Podcast {
+        return $this->podcast;
+    }
+
+    function setUrl($url) {
+        $this->url = $url;
+    }
+
+    function setPodcast(Podcast $podcast) {
+        $this->podcast = $podcast;
+    }
+
+    function getId() {
+        return $this->id;
     }
 
 }
