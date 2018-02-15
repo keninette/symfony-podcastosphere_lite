@@ -6,6 +6,8 @@ module.exports = function (grunt) {
         'js/app/*.js',
         'js/app/modules/*.js'
     ];
+    
+    
 
     // Project configuration
     grunt.initConfig({
@@ -14,130 +16,30 @@ module.exports = function (grunt) {
 
         // setup some variables that we'll use below
         appDir: 'public/',
-        builtDir: 'public/prod/',
-        
-        sass: {
-            development: {
-                options: {
-                    style: 'compressed'
-                },
-                files: {
-                        '<%= appDir %>/less/responsive.dataTables.css' : '<%= appDir %>/vendor/datatables-responsive/css/responsive.dataTables.scss'
-                }
-            }
-        },
-        
-        requirejs: {
-            // creates a "main" requirejs sub-task (grunt requirejs:main)
-            // we *could* have other sub-tasks for using requirejs with other
-            // files or configuration
-            main: {
-                options: {
-                    mainConfigFile: '<%= appDir %>/js/common.js',
-                    appDir: '<%= appDir %>',
-                    baseUrl: './js',
-                    dir: '<%= builtDir %>',
-                    // will be taken care of with compass
-                    optimizeCss: "none",
-                    // will be taken care of with an uglify task directly
-                    optimize: "none",
+        builtDir: 'public/build/',
 
-                    /**
-                     * The list of modules that should have their dependencies packed into them.
-                     *
-                     * For each module listed here, Require.js will read
-                     * that modules dependencies and package them in the
-                     * file. It will additionally add in any modules (and
-                     * their dependencies) specified in the "include" and
-                     * exclude any modules (and their dependencies) specified
-                     * in "exclude".
-                     */
-                    modules: [
-                        // First set up the common build layer.
-                        {
-                            // module names are relative to baseUrl
-                            name: 'common',
-                            // List common dependencies here. Only need to list
-                            // top level dependencies, "include" will find
-                            // nested dependencies inside each of these
-                            include: ['jquery', 'bootstrap', 'domReady', 'default']
-                        },
-
-
-                        // Now set up a build layer for each page, but exclude
-                        // the common one. "exclude" will exclude nested
-                        // the nested, built dependencies from "common". Any
-                        // "exclude" that includes built modules should be
-                        // listed before the build layer that wants to exclude it.
-                        // "include" the appropriate "app/main*" module since by default
-                        // it will not get added to the build since it is loaded by a nested
-                        // require in the page*.js files.
-                        //{
-                            // module names are relative to baseUrl/paths config
-                            //name: ['app/prices',
-                            //exclude: ['common']
-                        //}
-                    ]
-                }
-            }
-        },
-        
-        copy: {
-            main: {
+        // Uglify js files (remove spaces and line breaks)
+        uglify: {
+            my_target: {
                 files: [{
                     expand: true,
-                    cwd: '<%= appDir %>/vendor/font-awesome/fonts/',
-                    src: ['**'],
-                    dest: '<%= appDir %>/fonts/'
-                }]
-            }
-        },
-
-        uglify: {
-            options: {
-                // a cute way to put a banner on each uglified file
-                banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
-            },
-            build: {
-                /*
-                 * I'm not sure if finding files recursively is possible. This is
-                 * a bit ugly, but it accomplishes the task of finding all files
-                 * in the built directory (that we want) and uglifying them.
-                 *
-                 * Additionally, I created a little self-executing function
-                 * here so that I could re-use the jsFilePaths from above
-                 *
-                 * https://github.com/gruntjs/grunt-contrib-uglify/issues/23
-                 */
-                files: (function() {
-
-                    var files = [];
-                    jsFilePaths.forEach(function(val) {
-                        files.push({
-                            expand: true,
-                            cwd: '<%= builtDir %>',
-                            src: val,
-                            dest: '<%= builtDir %>'
-                        });
-                    });
-                    
-                    return files;
-                })()
+                    cwd:    '<%= appDir %>js',
+                    src:    '**/*.js',
+                    dest:   '<%= buildDir %>js'
+                  }]
             }
         },
         
+        // Minify css default file
+        // Because in order to minimize the nb of queries between server and client, we will have only one css
         cssmin: {
-            dist: {
-                options: {
-                    banner: '/*! MyLib.js 1.0.0 | Aurelio De Rosa (@AurelioDeRosa) | MIT Licensed */'
-                },
-                files: {
-                    '<%= builtDir %>/css/frontend.css': '<%= builtDir %>/css/frontend.css',
-                    '<%= builtDir %>/css/backend.css': '<%= builtDir %>/css/backend.css'
-                }
-           }
+            minify: {
+                src: '<%= appDir %>/css/default.css',
+                dest: '<%= buildDir %>/css/default.min.css'
+            }
         },
-        
+
+        // Compile LESS to CSS on saving
         less: {
             development: {
                 options: {
@@ -165,7 +67,7 @@ module.exports = function (grunt) {
 
                     return files;
                 })(),
-                tasks: ['requirejs']
+                tasks: ['uglify']
             },
             // watch all .less files and run less
             styles: {
@@ -180,12 +82,10 @@ module.exports = function (grunt) {
     });
 
     // Load tasks from our external plugins. These are what we're configuring above
-    grunt.loadNpmTasks('grunt-contrib-sass');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-requirejs');
     grunt.loadNpmTasks('grunt-contrib-less');
-    grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
 
